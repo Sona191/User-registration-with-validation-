@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IBM-FE User Registration with Validation</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1a73e8;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .success {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #1a73e8;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #155fc0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>IBM-FE User Registration</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" />
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" />
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" />
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" />
+        <div class="error" id="confirmError"></div>
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" id="terms" name="terms" />
+        <label for="terms">I agree to the Terms and Conditions</label>
+        <div class="error" id="termsError"></div>
+      </div>
+
+      <button type="submit">Register</button>
+      <p class="success" id="successMessage"></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // Stop form from submitting
+      let isValid = true;
+
+      // Get input values
+      const name = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document
+        .getElementById("confirmPassword")
+        .value.trim();
+      const terms = document.getElementById("terms").checked;
+
+      // Error message elements
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmError = document.getElementById("confirmError");
+      const termsError = document.getElementById("termsError");
+      const successMessage = document.getElementById("successMessage");
+
+      // Clear previous messages
+      nameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+      confirmError.textContent = "";
+      termsError.textContent = "";
+      successMessage.textContent = "";
+
+      // Validate Full Name
+      if (name.length < 3) {
+        nameError.textContent = "Full name must be at least 3 characters.";
+        isValid = false;
+      }
+
+      // Validate Email
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+      }
+
+      // Validate Password
+      const passwordPattern =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+      if (!password.match(passwordPattern)) {
+        passwordError.textContent =
+          "Password must have 8+ chars, include uppercase, lowercase, number & symbol.";
+        isValid = false;
+      }
+
+      // Confirm Password
+      if (password !== confirmPassword) {
+        confirmError.textContent = "Passwords do not match.";
+        isValid = false;
+      }
+
+      // Terms & Conditions
+      if (!terms) {
+        termsError.textContent = "You must agree to the terms.";
+        isValid = false;
+      }
+
+      // Final Validation Result
+      if (isValid) {
+        successMessage.textContent = "✅ Registration Successful!";
+        form.reset();
+
+        // Clear message after 3 seconds
+        setTimeout(() => {
+          successMessage.textContent = "";
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Hello, World!</title>
+</head>
+<body>
+  <h1>
+    Hello, World!
+  </h1>
+</body>
+</html>
